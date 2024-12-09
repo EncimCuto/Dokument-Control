@@ -1,0 +1,242 @@
+
+body {
+    padding: 0;
+    margin: 0;
+    font-family: rubik, sans-serif;
+    background-color: rgb(255, 255, 255);
+}
+
+* {
+    text-decoration: none;
+}
+
+.all {
+    max-width: 100vmax;
+    background-color: rgb(255, 255, 255);
+  }
+
+/* header logo */
+.header {
+    width: 100%;
+    height: 16vh;
+    display: flex;
+    align-items: center;
+    background-color: white;
+}
+
+.header img {
+    margin-left: 4px;
+}
+
+/* navbar */
+.navbar {
+    width: 100%;
+    height: 9vh;
+    background-color: #0d6efd;
+    align-items: center;
+    display: flex;
+}
+
+/* icon */
+.fill {
+    background-color: white;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    justify-content: center;
+}
+
+/* isi */
+.page {
+    width: 100%;
+    height: 425px;
+    margin-top: 50px;
+}
+
+.dread {
+    width: 100vmax;
+    height: 6vh;
+    display: flex;
+    justify-content: left;
+    position: absolute;
+    z-index: 10;
+    align-items: end;
+}
+
+.crumb {
+    display: flex;
+    width: 100%;
+    height: 6vh;
+    align-items: end;
+    justify-content: space-between;
+}
+
+.delet {
+    display: none;
+    margin-top: 5px;
+    margin-right: 5px;
+}
+
+.delet.active {
+    display: flex;
+    margin-top: 5px;
+    margin-right: 15px;
+    width: 220px;
+}
+
+.delet button {
+    margin-left: 10px;
+    margin-right: 10px;
+}
+
+.rumb {
+    margin-bottom: 10px;
+    margin-left: 16px;
+}
+
+.table-input {
+    text-transform: uppercase;
+}
+
+.data-sch {
+    width: 100%;
+    height: 425px;
+    overflow: auto;
+    overflow-y: visible;
+}
+
+.table {
+    height: 425px;
+    text-align: center;
+}
+
+.table th {
+    background-color: rgba(75, 73, 73, 0.644);
+    position: sticky;
+    top: 0;
+    width: auto;
+    z-index: 999;
+    max-width: fit-content;
+    text-align: center;
+}
+
+.table td {
+    border: 1px solid black;
+    width: auto;
+}
+
+.form-check {
+    display: flex;
+    align-items: center;
+}
+
+.form-check-input {
+    display: none;
+}
+
+.title-check {
+    display: none;
+}
+
+.table-check {
+    display: none;
+}
+
+.form-check-input.active {
+    display: inline;
+}
+
+.title-check.active {
+    display: table-cell;
+}
+
+.table-check.active {
+    display: table-cell;
+}
+
+@media screen and (max-width: 768px) {
+    
+    .navbar {
+        width: 100%;
+        height: 8vh;
+        background-color: #0d6efd;
+        align-items: center;
+        display: flex;justify-content: left;
+    }
+
+}
+
+
+@media screen and (max-width: 435px) {
+
+    .dread {
+        width: 100%;
+        height: 7vh;
+        display: flex;
+        justify-content: left;
+        position: absolute;
+        z-index: 10;
+        align-items: end;
+    }
+    
+    .crumb {
+        display: flex;
+        width: 100%;
+        height: 7vh;
+        align-items: end;
+        justify-content: right;
+    }
+
+    .rumb {
+        display: none;
+    }
+
+    .delet {
+        display: none;
+        margin-top: 5px;
+    }
+    
+    .delet.active {
+        display: flex;
+        margin-top: 5px;
+        width: 180px;
+    }
+    
+    .navbar {
+        width: 100%;
+        height: 10vh;
+        background-color: #0d6efd;
+        align-items: center;
+        display: flex;justify-content: left;
+    }
+
+    .box {
+        border: 1px solid rgba(0, 0, 0, 0.726);
+        width: 130px;
+        height: 130px;
+        display: flex;
+        flex-wrap: wrap;
+        margin: 15px;
+        justify-content: center;
+        align-items: end;
+        border-radius: 10px;
+        background-color: rgb(255, 255, 255);
+    }
+    
+    .box:hover {
+        box-shadow: 5px 5px 10px rgba(48, 47, 47, 0.267);
+    }
+    
+    .name {
+        width: 100%;
+        height: 20%;
+        border-radius: 10px;
+        text-align: center;
+        font-size: 30;
+        color: rgb(61, 60, 60);
+        font-weight: 0;
+        text-decoration: none;
+    }
+
+}
