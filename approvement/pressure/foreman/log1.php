@@ -24,7 +24,7 @@ if ($user) {
 
     setcookie('token', $token, time() + 86400, "/");
 
-    header("Location: http://10.11.11.176/dokumentcontrol/approvement/pressure/approved1.php?id=$id&username=$username&bagian=$bagian&$token");
+    header("Location: http://10.11.11.199/dokument-control/approvement/pressure/foreman/foreman.php?id=$id&username=$username&bagian=$bagian&$token");
     exit;
 } else {
     header('Location: ../log-in-app1.php?error=login_failed');

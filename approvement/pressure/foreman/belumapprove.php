@@ -10,6 +10,9 @@ if (!isset($_SESSION['token']) || empty($_SESSION['token'])) {
 $id = $_SESSION['id'];
 $username = $_SESSION['username'];
 $bagian = $_SESSION['bagian'];
+
+$username = $_GET['username'];
+$bagian = $_GET['bagian'];
 ?>
 
 <?php
@@ -179,12 +182,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                         </div>
                     </li>
                     <?php
-                    if (isset($_GET['action']) && $_GET['action'] === 'logout') {
-                        session_unset();
-                        session_destroy();
-                        header('Location: ../../../../index.php');
-                        exit;
-                    }
+                        if (isset($_GET['action']) && $_GET['action'] === 'logout') {
+                            session_unset();
+                            session_destroy();
+                            header('Location: ../log-in-app1.php');
+                            exit;
+                        }
                     ?>
                     <li class="list-group-item"><a href="?action=logout" class="link-dark link-underline link-underline-opacity-0">Logout</a></li>
                 </ul>
@@ -198,15 +201,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   <div class="dread">       
       <div class="crumb">   
           <div class="rumb">
-              <a class="link-dark link-offset-2 link-underline-opacity-0 link-underline-opacity-100-hover" href="../foreman.php?token=<?php echo htmlspecialchars($_SESSION['token']); ?>">MENU</a>
+              <a class="link-dark link-offset-2 link-underline-opacity-0 link-underline-opacity-100-hover" href="foreman.php?username=<?php echo $_GET['username']; ?>&bagian=<?php echo $_GET['bagian']; ?>&id=<?php echo $_GET['id']; ?>&token=<?php echo htmlspecialchars($_SESSION['token']); ?>">MENU</a>
           </div>
-          <div class="delet">    
+          <div class="delet">
               <button id="selectedall" class="btn btn-warning btn-sm">SELECT ALL</button>
-              <form method="post" action="app_1.php" id="form-delete">   
+              <form action="app_1.php?username=<?php echo $_GET['username']; ?>&bagian=<?php echo $_GET['bagian']; ?>&token=<?php echo htmlspecialchars($_SESSION['token']); ?>" methos="POST" id="form-delete">
               <button class="btn btn-success btn-sm" type="submit" onclick="return confirm('Apakah Anda yakin dengan data yang tercentang?')">APPROVE</button>
           </div>
       </div>
   </div>
+
 <div class="page">
 <div class="data-sch">
 
@@ -215,26 +219,31 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 require_once '../../../src/config/config2.php';
 
 // departemen pemilik
-if (isset($_GET['tanggal_dibuat'])) 
-      {$tanggal_dibuat = $_GET['tanggal_dibuat'];} 
-else  {$tanggal_dibuat = '';}
-
+if (isset($_GET['tanggal_dibuat'])) {
+    $tanggal_dibuat = $_GET['tanggal_dibuat'];
+} else {
+    $tanggal_dibuat = '';
+}
 // nama alat
-if (isset($_GET['kode_alat'])) 
-      {$kode_alat = $_GET['kode_alat'];} 
-else  {$kode_alat = '';}
-
+if (isset($_GET['kode_alat'])) {
+    $kode_alat = $_GET['kode_alat'];
+} else {
+    $kode_alat = '';
+}
 $sql = "SELECT * FROM pressure_handover WHERE 1";
-
 // departemen pemilik
 if (!empty($tanggal_dibuat)) {
-    $sql .= " AND tanggal_dibuat LIKE '%$tanggal_dibuat%'";}
-
+    $sql .= " AND tanggal_dibuat LIKE '%$tanggal_dibuat%'";
+}
 // nama alat
 if (!empty($kode_alat)) {
-    $sql .= " AND kode_alat LIKE '%$kode_alat%'";}
+    $sql .= " AND kode_alat LIKE '%$kode_alat%'";
+}
 
+// Kondisi untuk menampilkan data yang kolom app1, app2, app3, atau app4 belum terisi
+$sql .= " AND (LENGTH(app1) = 0 OR LENGTH(app2) = 0 OR LENGTH(app3) = 0 OR LENGTH(app4) = 0)";
 $result = $conn->query($sql);
+
 echo "<table class='table table-hover'>";
 echo "<tr class='table-dark table-sm'>";
 echo "<th class='title-check'></th>";
@@ -245,33 +254,36 @@ echo "<th>FOREMAN</th>";
 echo "<th>SUPERVISOR</th>";
 echo "<th>MANAGER</th>";
 echo "<th>USER</th>";
-echo "<th colspan='2'>OPSI</th>";
+echo "<th>OPSI</th>";
 echo "</tr>";
-if ($result && $result->num_rows > 0) {
-    $counter=1;
-    while ($row = $result->fetch_assoc()) {
-      // Check if all app fields are filled
-      $app1_status = !empty($row['app1']) ? 'Complete' : '';
-      $app2_status = !empty($row['app2']) ? 'Complete' : '';
-      $app3_status = !empty($row['app3']) ? 'Complete' : '';
-      $app4_status = !empty($row['app4']) ? 'Complete' : '';
 
-      echo "<tr>";
-      echo '<td class="table-check"><input type="checkbox" name="ids[]" class="form-check-input" value="' . htmlspecialchars($row['id']) . '"></td>';
-      echo '<td>' . $counter . '</td>';
-      echo "<td>" . htmlspecialchars(string: $row['tanggal_dibuat']) . "</td>";
-      echo "<td>" . htmlspecialchars($row['kode_alat']) . "</td>";
-      echo "<td>" . htmlspecialchars($app1_status) . "</td>";  // Display "Complete" or app1 value
-      echo "<td>" . htmlspecialchars($app2_status) . "</td>";  // Display "Complete" or app2 value
-      echo "<td>" . htmlspecialchars($app3_status) . "</td>";  // Display "Complete" or app3 value
-      echo "<td>" . htmlspecialchars($app4_status) . "</td>";  // Display "Complete" or app4 value
-      echo '<td><a href="approved1.php?id=' . htmlspecialchars($row['id']) . '"><i class="bi bi-eye-fill"></i></a></td>';
-      echo '<td><a class="link-danger link-offset-2 link-underline-opacity-25 link-underline-opacity-100-hover" href="../../../system/pressure/delete-data-handover.php?id=' . htmlspecialchars($row['id']) . '"><i class="bi bi-trash-fill"></i></a></td>';
-      echo "</tr>";
-      $counter++;
+if ($result && $result->num_rows > 0) {
+    $counter = 1;
+    while ($row = $result->fetch_assoc()) {
+        // Check if app fields are filled
+        $app1_status = !empty($row['app1']) ? 'Complete' : '';
+        $app2_status = !empty($row['app2']) ? 'Complete' : '';
+        $app3_status = !empty($row['app3']) ? 'Complete' : '';
+        $app4_status = !empty($row['app4']) ? 'Complete' : '';
+
+        echo "<tr>";
+        echo '<td class="table-check"><input type="checkbox" name="ids[]" class="form-check-input" value="' . htmlspecialchars($row['id']) . '"></td>';
+        echo '<td>' . $counter . '</td>';
+        echo "<td>" . htmlspecialchars($row['tanggal_dibuat']) . "</td>";
+        echo "<td>" . htmlspecialchars($row['kode_alat']) . "</td>";
+        echo "<td>" . htmlspecialchars($app1_status) . "</td>";
+        echo "<td>" . htmlspecialchars($app2_status) . "</td>";
+        echo "<td>" . htmlspecialchars($app3_status) . "</td>";
+        echo "<td>" . htmlspecialchars($app4_status) . "</td>";
+        echo '<td><a href="view.php?id=' . htmlspecialchars($row['id']) . '"><i class="bi bi-eye-fill"></i></a></td>';
+        echo "</tr>";
+        $counter++;
     }
     echo "</table>";
-} 
+} else {
+    echo "<p>No data to display.</p>";
+}
+
 $conn->close();
 ?>
 </div>

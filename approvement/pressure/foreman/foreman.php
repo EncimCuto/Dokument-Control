@@ -1,6 +1,6 @@
 <?php
 session_start();
-require_once '../../src/config/config.php';
+require_once '../../../src/config/config.php';
 
 if (!isset($_SESSION['token']) || empty($_SESSION['token'])) {
     header('Location: log-in-app1.php?id=' . $id );
@@ -20,8 +20,8 @@ $bagian = $_SESSION['bagian'];
     <title>FOREMAN</title>
 
     <!-- css -->
-    <link rel="stylesheet" href="../../src/styles/kalibrasi.css">
-    <link rel="stylesheet" href="../../src/components/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../../../src/styles/kalibrasi.css">
+    <link rel="stylesheet" href="../../../src/components/bootstrap/css/bootstrap.min.css">
     <!-- /css -->
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -31,7 +31,7 @@ $bagian = $_SESSION['bagian'];
 <body>
 <div class="all">
     <div class="header">
-        <img src="../../src/assets/BAS_logo.png" alt="">
+        <img src="../../../src/assets/BAS_logo.png" alt="">
     </div>
 
     <!-- navbar -->
@@ -96,7 +96,7 @@ $bagian = $_SESSION['bagian'];
                 if (isset($_GET['action']) && $_GET['action'] === 'logout') {
                     session_unset();
                     session_destroy();
-                    header('Location: ../../../index.php');
+                    header('Location: ../log-in-app1.php');
                     exit;
                 }
             ?>
@@ -112,7 +112,7 @@ $bagian = $_SESSION['bagian'];
 <div class="dread">
 </div>
 <div class="page">
-<a href="foreman/belumapprove.php?token=<?php echo htmlspecialchars($_SESSION['token']); ?>" class="link-dark link-underline link-underline-opacity-0">
+<a href="belumapprove.php?username=<?php echo $_GET['username']; ?>&bagian=<?php echo $_GET['bagian']; ?>&id=<?php echo $_GET['id']; ?>&token=<?php echo htmlspecialchars($_SESSION['token']); ?>" class="link-dark link-underline link-underline-opacity-0">
     <div class="box">
     <svg xmlns="http://www.w3.org/2000/svg" width="50%" height="50%" fill="rgb(61, 60, 60)" class="bi bi-x-square" viewBox="0 0 16 16">
       <path d="M14 1a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1zM2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2z"/>
@@ -121,7 +121,7 @@ $bagian = $_SESSION['bagian'];
         <div class="name">BELUM APPROVE</div>
     </div>
 </a>
-<a href="foreman/sudahapprove.php?token=<?php echo htmlspecialchars($_SESSION['token']); ?> " class="link-dark link-underline link-underline-opacity-0">
+<a href="sudahapprove.php?username=<?php echo $_GET['username']; ?>&bagian=<?php echo $_GET['bagian']; ?>&id=<?php echo $_GET['id']; ?>&token=<?php echo htmlspecialchars($_SESSION['token']); ?>" class="link-dark link-underline link-underline-opacity-0">
     <div class="box">
     <svg xmlns="http://www.w3.org/2000/svg" width="50%" height="50%" fill="rgb(61, 60, 60)" class="bi bi-check-square" viewBox="0 0 16 16">
       <path d="M14 1a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1zM2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2z"/>
@@ -135,7 +135,7 @@ $bagian = $_SESSION['bagian'];
 
 <!-- js -->
 <script src="script.js"></script>
-<script src="../../src/components/bootstrap/js/bootstrap.min.js"></script>
-<script src="../../src/components/bootstrap/js/bootstrap.bundle.js"></script>
+<script src="../../../src/components/bootstrap/js/bootstrap.min.js"></script>
+<script src="../../../src/components/bootstrap/js/bootstrap.bundle.js"></script>
 </body>
 </html>

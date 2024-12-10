@@ -17,7 +17,7 @@
         <div class="header"><img src="../../src/assets/BAS_logo.png" alt=""></div>
         <div class="line"><p>Login To Approve</p></div>
         <div class="login">
-            <form id="loginForm" action="system/log1.php?id=<?php echo $_GET['id']; ?>" method="POST">
+            <form id="loginForm" action="foreman/log1.php?id=<?php echo $_GET['id']; ?>" method="POST">
                 <label for="username">Username</label>
                 <br>
                 <input type="text" id="username" name="username" required>

@@ -40,6 +40,7 @@ if (isset($_POST['ids']) && is_array($_POST['ids'])) {
                         exit();
                     }
                      else {
+                        
                     
                         echo "<script>alert('APPROVED FAILED ❎');</script><br>"; // $id: " . $stmt_update->error . "
                     }
