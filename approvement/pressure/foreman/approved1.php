@@ -1,6 +1,6 @@
 <?php
 session_start();
-require_once '../../src/config/config.php';
+require_once '../../../src/config/config.php';
 
 $id = $_GET['id'];
 
@@ -15,13 +15,10 @@ $bagian = $_SESSION['bagian'];
 ?>
 
 <?php
-    require_once'../../src/config/config2.php';
-    require_once('../../src/components/tcpdf/tcpdf.php');
+    require_once'../../../src/config/config2.php';
+    require_once('../../../src/components/tcpdf/tcpdf.php');
 
 $id = $_GET['id'];
-$username = $_GET['username'];
-$bagian = $_GET['bagian'];
-
 $query = "SELECT * FROM pressure_handover WHERE id = $id";
     $result = mysqli_query($conn, $query);
         if (mysqli_num_rows($result) > 0) {
@@ -74,7 +71,7 @@ $query = "SELECT * FROM pressure_handover WHERE id = $id";
     $pdf->Rect(41, 210, $pdf->getPageWidth() - 85, $pdf->getPageHeight() - 297);
     
     // Variabel untuk konten header dan data
-    $logo = '<img src="../../src/assets/LogoForm.png">';
+    $logo = '<img src="../../../src/assets/LogoForm.png">';
     $header = '
     <style>
         * {
@@ -705,8 +702,8 @@ $query = "SELECT * FROM pressure_handover WHERE id = $id";
         <iframe src='data:application/pdf;base64,<?php echo base64_encode($pdfContent); ?>' width='540' height='580'></iframe>
     </div>
     <div class="box">
-    <form action="system/app_1.php?id=<?php echo $_GET['id']; ?>&username=<?php echo $_GET['username']; ?>&bagian=<?php echo $_GET['bagian']; ?>" method="POST">
-        <button type="submit" class="btn btn-success" id="app">APPROVE</button>
+    <form action="belumapprove.php" method="POST">
+        <button type="submit" class="btn btn-success" id="app">KEMBALI</button>
     </form>
     </div>
     </div>

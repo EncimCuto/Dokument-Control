@@ -40,6 +40,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 }
 ?>
 
+
  <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -74,6 +75,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
 <!-- schedule -->
 <div class="menu_right">
+    
+<!-- SELECT DATA -->
+  <button id="toggleButton" class="btn btn-primary" type="button">
+        <i class="bi bi-check2-all" style="font-size: 20px;"></i>
+  </button>
 <!-- FILTER -->
   <button class="btn btn-primary" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasScrolling2" aria-controls="offcanvasScrolling">
         <i class="bi bi-filter-right" style="font-size: 20px;"></i>
@@ -85,7 +91,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
           <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
       </div>
   <div class="offcanvas-body">
-    
+
   <div class="accordion" id="accordionExample">
   <div class="accordion-item">
     <h2 class="accordion-header">
@@ -194,6 +200,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
           <div class="rumb">
               <a class="link-dark link-offset-2 link-underline-opacity-0 link-underline-opacity-100-hover" href="../foreman.php?token=<?php echo htmlspecialchars($_SESSION['token']); ?>">MENU</a>
           </div>
+          <div class="delet">    
+              <button id="selectedall" class="btn btn-warning btn-sm">SELECT ALL</button>
+              <form method="post" action="app_1.php" id="form-delete">   
+              <button class="btn btn-success btn-sm" type="submit" onclick="return confirm('Apakah Anda yakin dengan data yang tercentang?')">APPROVE</button>
+          </div>
       </div>
   </div>
 <div class="page">
@@ -226,25 +237,40 @@ if (!empty($kode_alat)) {
 $result = $conn->query($sql);
 echo "<table class='table table-hover'>";
 echo "<tr class='table-dark table-sm'>";
+echo "<th class='title-check'></th>";
 echo "<th>#</th>";
-echo "<th>TANGGAL</th>";
-echo "<th>KODE ALAT</th>";
+echo "<th>TANGGAL DIBUAT</th>";
+echo "<th>KODE ALAT YANG DIKALIBRASI</th>";
+echo "<th>FOREMAN</th>";
+echo "<th>SUPERVISOR</th>";
+echo "<th>MANAGER</th>";
+echo "<th>USER</th>";
 echo "<th colspan='2'>OPSI</th>";
 echo "</tr>";
 if ($result && $result->num_rows > 0) {
     $counter=1;
     while ($row = $result->fetch_assoc()) {
+      // Check if all app fields are filled
+      $app1_status = !empty($row['app1']) ? 'Complete' : '';
+      $app2_status = !empty($row['app2']) ? 'Complete' : '';
+      $app3_status = !empty($row['app3']) ? 'Complete' : '';
+      $app4_status = !empty($row['app4']) ? 'Complete' : '';
+
       echo "<tr>";
       echo '<td class="table-check"><input type="checkbox" name="ids[]" class="form-check-input" value="' . htmlspecialchars($row['id']) . '"></td>';
       echo '<td>' . $counter . '</td>';
-      echo "<td>" . htmlspecialchars($row['tanggal_dibuat']) . "</td>";
+      echo "<td>" . htmlspecialchars(string: $row['tanggal_dibuat']) . "</td>";
       echo "<td>" . htmlspecialchars($row['kode_alat']) . "</td>";
-      echo '<td><a href="page-system/view-certificate.php?id=' . htmlspecialchars($row['id']) . '"><i class="bi bi-cloud-arrow-down-fill"></i></a></td>';
+      echo "<td>" . htmlspecialchars($app1_status) . "</td>";  // Display "Complete" or app1 value
+      echo "<td>" . htmlspecialchars($app2_status) . "</td>";  // Display "Complete" or app2 value
+      echo "<td>" . htmlspecialchars($app3_status) . "</td>";  // Display "Complete" or app3 value
+      echo "<td>" . htmlspecialchars($app4_status) . "</td>";  // Display "Complete" or app4 value
+      echo '<td><a href="page-system/view-certificate.php?id=' . htmlspecialchars($row['id']) . '"><i class="bi bi-eye-fill"></i></a></td>';
       echo '<td><a class="link-danger link-offset-2 link-underline-opacity-25 link-underline-opacity-100-hover" href="../../../system/pressure/delete-data-handover.php?id=' . htmlspecialchars($row['id']) . '"><i class="bi bi-trash-fill"></i></a></td>';
       echo "</tr>";
       $counter++;
     }
-      echo "</table>";
+    echo "</table>";
 } 
 $conn->close();
 ?>
@@ -254,7 +280,43 @@ $conn->close();
 </div>
 </div>
 
-<!-- JS & BOOSTRAP -->
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    var toggleButton = document.getElementById('selectedall');
+    var checkboxes = document.querySelectorAll('.form-check-input');
+    var allChecked = false;
+    toggleButton.addEventListener('click', function() {
+        allChecked = !allChecked;
+        checkboxes.forEach(function(checkbox) {
+            checkbox.checked = allChecked;
+        });
+        toggleButton.textContent = allChecked ? 'DESELECT' : 'SELECTALL';
+    });
+});
+
+var button = document.getElementById('toggleButton');
+button.addEventListener('click', function() {
+    var element = document.querySelector('.delet');
+    if (element) {
+        element.classList.toggle('active');
+    }
+});
+
+document.getElementById('toggleButton').addEventListener('click', function() {
+    document.querySelectorAll('.form-check-input').forEach(function(element) {
+        element.classList.toggle('active');
+    });
+
+    document.querySelectorAll('.title-check').forEach(function(element) {
+        element.classList.toggle('active');
+    });
+
+    document.querySelectorAll('.table-check').forEach(function(element) {
+        element.classList.toggle('active');
+    });
+});
+</script>
+<!-- JS z& zBOOSTRAP -->
 <script src="../../../src/components/bootstrap/js/bootstrap.min.js"></script>
 <script src="../../../src/components/bootstrap/js/bootstrap.bundle.js"></script>
 </body>

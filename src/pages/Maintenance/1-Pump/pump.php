@@ -118,6 +118,17 @@ $bagian = $_SESSION['bagian'];
         border: 2px solid #B0B0B0;
         padding: 3px;
     }
+
+    .korektif {
+        padding: 10px;
+        width: 100%;
+        height: 100%;
+        box-sizing: border-box;
+        text-align: left;
+        vertical-align: top;
+        resize: none;
+        font-size: 16px;
+    }
 </style>
 
 <body>
@@ -561,7 +572,9 @@ $bagian = $_SESSION['bagian'];
 
                         <!-- DESKRIPSI & JUMLAH -->
                         <tr>
-                            <td colspan="6" rowspan="17" style="border-top: none;"></td>
+                            <td colspan="6" rowspan="17" style="border-top: none;">
+                                <textarea name="korektif" id="korektif" class="korektif hijau"></textarea>
+                            </td>
                             <td colspan="4">
                                 <h3>Deskripsi</h3>
                             </td>

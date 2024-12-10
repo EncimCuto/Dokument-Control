@@ -202,8 +202,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
           </div>
           <div class="delet">    
               <button id="selectedall" class="btn btn-warning btn-sm">SELECT ALL</button>
-              <form method="post" action="../../../system/pressure/delete.php" id="form-delete">   
-              <button class="btn btn-success btn-sm" type="submit" onclick="return confirm('Apakah Anda yakin ingin menghapus data yang tercentang?')">APPROVE</button>
+              <form method="post" action="app_1.php" id="form-delete">   
+              <button class="btn btn-success btn-sm" type="submit" onclick="return confirm('Apakah Anda yakin dengan data yang tercentang?')">APPROVE</button>
           </div>
       </div>
   </div>
@@ -265,7 +265,7 @@ if ($result && $result->num_rows > 0) {
       echo "<td>" . htmlspecialchars($app2_status) . "</td>";  // Display "Complete" or app2 value
       echo "<td>" . htmlspecialchars($app3_status) . "</td>";  // Display "Complete" or app3 value
       echo "<td>" . htmlspecialchars($app4_status) . "</td>";  // Display "Complete" or app4 value
-      echo '<td><a href="page-system/view-certificate.php?id=' . htmlspecialchars($row['id']) . '"><i class="bi bi-eye-fill"></i></a></td>';
+      echo '<td><a href="approved1.php?id=' . htmlspecialchars($row['id']) . '"><i class="bi bi-eye-fill"></i></a></td>';
       echo '<td><a class="link-danger link-offset-2 link-underline-opacity-25 link-underline-opacity-100-hover" href="../../../system/pressure/delete-data-handover.php?id=' . htmlspecialchars($row['id']) . '"><i class="bi bi-trash-fill"></i></a></td>';
       echo "</tr>";
       $counter++;
