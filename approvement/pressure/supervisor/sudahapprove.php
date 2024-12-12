@@ -201,7 +201,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   <div class="dread">       
       <div class="crumb">   
           <div class="rumb">
-              <a class="link-dark link-offset-2 link-underline-opacity-0 link-underline-opacity-100-hover" href="foreman.php?username=<?php echo $_GET['username']; ?>&bagian=<?php echo $_GET['bagian']; ?>&token=<?php echo htmlspecialchars($_SESSION['token']); ?>">MENU</a>
+              <a class="link-dark link-offset-2 link-underline-opacity-0 link-underline-opacity-100-hover" href="supervisor.php?username=<?php echo $_GET['username']; ?>&bagian=<?php echo $_GET['bagian']; ?>&token=<?php echo htmlspecialchars($_SESSION['token']); ?>">MENU</a>
           </div>
           <div class="delet">    
               <button id="selectedall" class="btn btn-warning btn-sm">SELECT ALL</button>

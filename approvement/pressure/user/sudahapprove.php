@@ -3,7 +3,7 @@ session_start();
 require_once '../../../src/config/config.php';
 
 if (!isset($_SESSION['token']) || empty($_SESSION['token'])) {
-    header('Location: ../log-in-app1.php?id=' . $id );
+    header('Location: ../log-in-app4.php?id=' . $id );
     exit;
 }
 
@@ -185,7 +185,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                         if (isset($_GET['action']) && $_GET['action'] === 'logout') {
                             session_unset();
                             session_destroy();
-                            header('Location: ../log-in-app1.php');
+                            header('Location: ../log-in-app4.php');
                             exit;
                         }
                     ?>
@@ -201,7 +201,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   <div class="dread">       
       <div class="crumb">   
           <div class="rumb">
-              <a class="link-dark link-offset-2 link-underline-opacity-0 link-underline-opacity-100-hover" href="foreman.php?username=<?php echo $_GET['username']; ?>&bagian=<?php echo $_GET['bagian']; ?>&token=<?php echo htmlspecialchars($_SESSION['token']); ?>">MENU</a>
+              <a class="link-dark link-offset-2 link-underline-opacity-0 link-underline-opacity-100-hover" href="user.php?username=<?php echo $_GET['username']; ?>&bagian=<?php echo $_GET['bagian']; ?>&token=<?php echo htmlspecialchars($_SESSION['token']); ?>">MENU</a>
           </div>
           <div class="delet">    
               <button id="selectedall" class="btn btn-warning btn-sm">SELECT ALL</button>

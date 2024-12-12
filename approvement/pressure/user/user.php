@@ -3,7 +3,7 @@ session_start();
 require_once '../../../src/config/config.php';
 
 if (!isset($_SESSION['token']) || empty($_SESSION['token'])) {
-    header('Location: log-in-app1.php?id=' . $id );
+    header('Location: log-in-app4.php?id=' . $id );
     exit;
 }
 
@@ -16,7 +16,7 @@ $bagian = $_SESSION['bagian'];
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>FOREMAN</title>
+    <title>USER</title>
 
     <!-- css -->
     <link rel="stylesheet" href="../../../src/styles/kalibrasi.css">
@@ -95,7 +95,7 @@ $bagian = $_SESSION['bagian'];
                 if (isset($_GET['action']) && $_GET['action'] === 'logout') {
                     session_unset();
                     session_destroy();
-                    header('Location: ../log-in-app1.php');
+                    header('Location: ../log-in-app4.php');
                     exit;
                 }
             ?>

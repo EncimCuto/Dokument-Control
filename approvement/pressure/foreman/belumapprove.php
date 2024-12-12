@@ -7,7 +7,6 @@ if (!isset($_SESSION['token']) || empty($_SESSION['token'])) {
     exit;
 }
 
-$id = $_SESSION['id'];
 $username = $_SESSION['username'];
 $bagian = $_SESSION['bagian'];
 
@@ -201,12 +200,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   <div class="dread">       
       <div class="crumb">   
           <div class="rumb">
-              <a class="link-dark link-offset-2 link-underline-opacity-0 link-underline-opacity-100-hover" href="foreman.php?username=<?php echo $_GET['username']; ?>&bagian=<?php echo $_GET['bagian']; ?>&id=<?php echo $_GET['id']; ?>&token=<?php echo htmlspecialchars($_SESSION['token']); ?>">MENU</a>
+              <a class="link-dark link-offset-2 link-underline-opacity-0 link-underline-opacity-100-hover" href="foreman.php?username=<?php echo $_GET['username']; ?>&bagian=<?php echo $_GET['bagian']; ?>&token=<?php echo htmlspecialchars($_SESSION['token']); ?>">MENU</a>
           </div>
           <div class="delet">
               <button id="selectedall" class="btn btn-warning btn-sm">SELECT ALL</button>
-              <form action="app_1.php?username=<?php echo $_GET['username']; ?>&bagian=<?php echo $_GET['bagian']; ?>&token=<?php echo htmlspecialchars($_SESSION['token']); ?>" methos="POST" id="form-delete">
-              <button class="btn btn-success btn-sm" type="submit" onclick="return confirm('Apakah Anda yakin dengan data yang tercentang?')">APPROVE</button>
+              <form action="app1.php?username=<?php echo htmlspecialchars($_GET['username'] ?? ''); ?>&bagian=<?php echo htmlspecialchars($_GET['bagian'] ?? ''); ?>&token=<?php echo htmlspecialchars($_SESSION['token'] ?? ''); ?>" method="POST" id="form-delete">
+              <button class="btn btn-success btn-sm" type="submit">APPROVE</button>
           </div>
       </div>
   </div>
@@ -266,6 +265,10 @@ if ($result && $result->num_rows > 0) {
         $app3_status = !empty($row['app3']) ? 'Complete' : '';
         $app4_status = !empty($row['app4']) ? 'Complete' : '';
 
+        $username = isset($_GET['username']) ? htmlspecialchars($_GET['username']) : '';
+        $bagian = isset($_GET['bagian']) ? htmlspecialchars($_GET['bagian']) : '';
+        $id = htmlspecialchars($row['id']);
+
         echo "<tr>";
         echo '<td class="table-check"><input type="checkbox" name="ids[]" class="form-check-input" value="' . htmlspecialchars($row['id']) . '"></td>';
         echo '<td>' . $counter . '</td>';
@@ -275,7 +278,7 @@ if ($result && $result->num_rows > 0) {
         echo "<td>" . htmlspecialchars($app2_status) . "</td>";
         echo "<td>" . htmlspecialchars($app3_status) . "</td>";
         echo "<td>" . htmlspecialchars($app4_status) . "</td>";
-        echo '<td><a href="view.php?id=' . htmlspecialchars($row['id']) . '"><i class="bi bi-eye-fill"></i></a></td>';
+        echo '<td><a href="view.php?id=' . $id . '&username=' . $username . '&bagian=' . $bagian . '"><i class="bi bi-eye-fill"></i></a></td>';
         echo "</tr>";
         $counter++;
     }

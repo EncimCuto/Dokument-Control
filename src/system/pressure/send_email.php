@@ -482,7 +482,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 <td>' . htmlspecialchars($tanggal_dibuat) . '</td>
             </tr>
         </table>
-        <a href="http://10.11.11.176/dokumentcontrol/approvement/pressure/log-in-app2.php?id= '.$last_id.'"><button>link to approval</button></a>';
+        <a href="http://10.11.11.199/dokument-control/approvement/pressure/log-in-app2.php?id= '.$last_id.'"><button>link to approval</button></a>';
         $content3 = '
         <table>
             <tr>
@@ -495,7 +495,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 <td>' . htmlspecialchars($tanggal_dibuat) . '</td>
             </tr>
         </table>
-        <a href="http://10.11.11.176/dokumentcontrol/approvement/pressure/log-in-app3.php?id= '.$last_id.'"><button>link to approval</button></a>';
+        <a href="http://10.11.11.199/dokument-control/approvement/pressure/log-in-app3.php?id= '.$last_id.'"><button>link to approval</button></a>';
         $content4 = '
         <table>
             <tr>
@@ -508,7 +508,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 <td>' . htmlspecialchars($tanggal_dibuat) . '</td>
             </tr>
         </table>
-        <a href="http://10.11.11.176/dokumentcontrol/approvement/pressure/log-in-app4.php?id= '.$last_id.'"><button>link to approval</button></a>';
+        <a href="http://10.11.11.199/dokument-control/approvement/pressure/log-in-app4.php?id= '.$last_id.'"><button>link to approval</button></a>';
 
         $mail = new PHPMailer(true);
 

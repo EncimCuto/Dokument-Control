@@ -3,11 +3,10 @@ session_start();
 require_once '../../../src/config/config.php';
 
 if (!isset($_SESSION['token']) || empty($_SESSION['token'])) {
-    header('Location: ../log-in-app1.php?id=' . $id );
+    header('Location: ../log-in-app3.php?id=' . $id );
     exit;
 }
 
-$id = $_SESSION['id'];
 $username = $_SESSION['username'];
 $bagian = $_SESSION['bagian'];
 
@@ -49,7 +48,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <head>
       <meta charset="UTF-8">
       <meta name="viewport" content="width=device-width, initial-scale=1.0">
-      <title>SUDAH APPROVE</title>
+      <title>BELUM APPROVE</title>
 
       <!-- css -->
       <link rel="stylesheet" href="../../../src/styles/schedule.css">
@@ -80,9 +79,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <div class="menu_right">
     
 <!-- SELECT DATA -->
-  <!-- <button id="toggleButton" class="btn btn-primary" type="button">
+  <button id="toggleButton" class="btn btn-primary" type="button">
         <i class="bi bi-check2-all" style="font-size: 20px;"></i>
-  </button> -->
+  </button>
 <!-- FILTER -->
   <button class="btn btn-primary" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasScrolling2" aria-controls="offcanvasScrolling">
         <i class="bi bi-filter-right" style="font-size: 20px;"></i>
@@ -185,7 +184,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                         if (isset($_GET['action']) && $_GET['action'] === 'logout') {
                             session_unset();
                             session_destroy();
-                            header('Location: ../log-in-app1.php');
+                            header('Location: ../log-in-app3.php');
                             exit;
                         }
                     ?>
@@ -201,15 +200,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   <div class="dread">       
       <div class="crumb">   
           <div class="rumb">
-              <a class="link-dark link-offset-2 link-underline-opacity-0 link-underline-opacity-100-hover" href="foreman.php?username=<?php echo $_GET['username']; ?>&bagian=<?php echo $_GET['bagian']; ?>&token=<?php echo htmlspecialchars($_SESSION['token']); ?>">MENU</a>
+              <a class="link-dark link-offset-2 link-underline-opacity-0 link-underline-opacity-100-hover" href="manager.php?username=<?php echo $_GET['username']; ?>&bagian=<?php echo $_GET['bagian']; ?>&token=<?php echo htmlspecialchars($_SESSION['token']); ?>">MENU</a>
           </div>
-          <div class="delet">    
+          <div class="delet">
               <button id="selectedall" class="btn btn-warning btn-sm">SELECT ALL</button>
-              <form method="post" action="app_1.php" id="form-delete">   
-              <button class="btn btn-success btn-sm" type="submit" onclick="return confirm('Apakah Anda yakin dengan data yang tercentang?')">APPROVE</button>
+              <form action="app1.php?username=<?php echo htmlspecialchars($_GET['username'] ?? ''); ?>&bagian=<?php echo htmlspecialchars($_GET['bagian'] ?? ''); ?>&token=<?php echo htmlspecialchars($_SESSION['token'] ?? ''); ?>" method="POST" id="form-delete">
+              <button class="btn btn-success btn-sm" type="submit">APPROVE</button>
           </div>
       </div>
   </div>
+
 <div class="page">
 <div class="data-sch">
 
@@ -223,28 +223,24 @@ if (isset($_GET['tanggal_dibuat'])) {
 } else {
     $tanggal_dibuat = '';
 }
-
 // nama alat
 if (isset($_GET['kode_alat'])) {
     $kode_alat = $_GET['kode_alat'];
 } else {
     $kode_alat = '';
 }
-
 $sql = "SELECT * FROM pressure_handover WHERE 1";
-
 // departemen pemilik
 if (!empty($tanggal_dibuat)) {
     $sql .= " AND tanggal_dibuat LIKE '%$tanggal_dibuat%'";
 }
-
 // nama alat
 if (!empty($kode_alat)) {
     $sql .= " AND kode_alat LIKE '%$kode_alat%'";
 }
 
-// Kondisi untuk menampilkan data yang kolom app1, app2, app3, dan app4 terisi semua
-$sql .= " AND (LENGTH(app1) > 0 AND LENGTH(app2) > 0 AND LENGTH(app3) > 0 AND LENGTH(app4) > 0)";
+// Kondisi untuk menampilkan data yang kolom app1, app2, app3, atau app4 belum terisi
+$sql .= " AND (LENGTH(app1) = 0 OR LENGTH(app2) = 0 OR LENGTH(app3) = 0 OR LENGTH(app4) = 0)";
 $result = $conn->query($sql);
 
 echo "<table class='table table-hover'>";
@@ -268,9 +264,10 @@ if ($result && $result->num_rows > 0) {
         $app2_status = !empty($row['app2']) ? 'Complete' : '';
         $app3_status = !empty($row['app3']) ? 'Complete' : '';
         $app4_status = !empty($row['app4']) ? 'Complete' : '';
-        $username = isset($row['username']) ? htmlspecialchars($row['username']) : 'default_username';
-        $bagian = isset($row['bagian']) ? htmlspecialchars($row['bagian']) : 'default_bagian';
-        $id = isset($row['id']) ? htmlspecialchars($row['id']) : 'default_id';
+
+        $username = isset($_GET['username']) ? htmlspecialchars($_GET['username']) : '';
+        $bagian = isset($_GET['bagian']) ? htmlspecialchars($_GET['bagian']) : '';
+        $id = htmlspecialchars($row['id']);
 
         echo "<tr>";
         echo '<td class="table-check"><input type="checkbox" name="ids[]" class="form-check-input" value="' . htmlspecialchars($row['id']) . '"></td>';
@@ -281,7 +278,7 @@ if ($result && $result->num_rows > 0) {
         echo "<td>" . htmlspecialchars($app2_status) . "</td>";
         echo "<td>" . htmlspecialchars($app3_status) . "</td>";
         echo "<td>" . htmlspecialchars($app4_status) . "</td>";
-        echo '<td><a href="view2.php?username=' . $username . '&bagian=' . $bagian . '&id=' . $id . '"><i class="bi bi-eye-fill"></i></a></td>';
+        echo '<td><a href="view.php?id=' . $id . '&username=' . $username . '&bagian=' . $bagian . '"><i class="bi bi-eye-fill"></i></a></td>';
         echo "</tr>";
         $counter++;
     }
@@ -289,6 +286,7 @@ if ($result && $result->num_rows > 0) {
 } else {
     echo "<p>No data to display.</p>";
 }
+
 $conn->close();
 ?>
 </div>
@@ -323,15 +321,16 @@ document.getElementById('toggleButton').addEventListener('click', function() {
     document.querySelectorAll('.form-check-input').forEach(function(element) {
         element.classList.toggle('active');
     });
+
     document.querySelectorAll('.title-check').forEach(function(element) {
         element.classList.toggle('active');
     });
+
     document.querySelectorAll('.table-check').forEach(function(element) {
         element.classList.toggle('active');
     });
 });
 </script>
-
 <!-- JS & BOOSTRAP -->
 <script src="../../../src/components/bootstrap/js/bootstrap.min.js"></script>
 <script src="../../../src/components/bootstrap/js/bootstrap.bundle.js"></script>
