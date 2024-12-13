@@ -3,10 +3,11 @@ session_start();
 require_once '../../../src/config/config.php';
 
 if (!isset($_SESSION['token']) || empty($_SESSION['token'])) {
-    header('Location: log-in-app1.php?id=' . $id );
+    header('Location: ../index.php');
     exit;
 }
 
+$id = $_SESSION['id'];
 $username = $_SESSION['username'];
 $bagian = $_SESSION['bagian'];
 ?>
@@ -16,10 +17,10 @@ $bagian = $_SESSION['bagian'];
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>FOREMAN</title>
+    <title>Home</title>
 
     <!-- css -->
-    <link rel="stylesheet" href="../../../src/styles/kalibrasi.css">
+    <link rel="stylesheet" href="../../../src/styles/indeks.css">
     <link rel="stylesheet" href="../../../src/components/bootstrap/css/bootstrap.min.css">
     <!-- /css -->
 
@@ -34,9 +35,7 @@ $bagian = $_SESSION['bagian'];
     </div>
 
     <!-- navbar -->
-
     <div class="navbar">
-
     <button class="btn btn-primary" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasScrolling" aria-controls="offcanvasScrolling">
     <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" class="bi bi-list" viewBox="0 0 16 16">
         <path fill-rule="evenodd" d="M2.5 12a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5m0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5m0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5"/>
@@ -78,7 +77,7 @@ $bagian = $_SESSION['bagian'];
                             <td>USERNAME</td>
                             <td>:</td>
                             <td></td>
-                            <td><?php echo htmlspecialchars($username); ?></td>
+                            <td><?php echo $_GET['username']; ?></td>
                         </tr>
                         <tr>
                             <td>ROLE</td>
@@ -92,12 +91,12 @@ $bagian = $_SESSION['bagian'];
             </div>
             </li>
             <?php
-                if (isset($_GET['action']) && $_GET['action'] === 'logout') {
-                    session_unset();
-                    session_destroy();
-                    header('Location: ../log-in-app1.php');
-                    exit;
-                }
+            if (isset($_GET['action']) && $_GET['action'] === 'logout') {
+                session_unset();
+                session_destroy();
+                header('Location: ../index.php');
+                exit;
+            }
             ?>
             <li class="list-group-item"><a href="?action=logout" class="link-dark link-underline link-underline-opacity-0">Logout</a></li>
         </ul>
@@ -106,34 +105,49 @@ $bagian = $_SESSION['bagian'];
 </div>
 
     <!-- page -->
-
-<div class="fill">
-<div class="dread">
-</div>
-<div class="page">
-<a href="belumapprove.php?username=<?php echo $_GET['username']; ?>&bagian=<?php echo $_GET['bagian']; ?>&token=<?php echo htmlspecialchars($_SESSION['token']); ?>" class="link-dark link-underline link-underline-opacity-0">
-    <div class="box">
-    <svg xmlns="http://www.w3.org/2000/svg" width="50%" height="50%" fill="rgb(61, 60, 60)" class="bi bi-x-square" viewBox="0 0 16 16">
-      <path d="M14 1a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1zM2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2z"/>
-      <path d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708"/>
-    </svg>
-        <div class="name">BELUM APPROVE</div>
+    <div class="fill">
+    <div class="dread">
+        <div class="crumb">
+            <a class="link-dark link-offset-2 link-underline-opacity-0 link-underline-opacity-100-hover" href="indeks.php?token=<?php echo htmlspecialchars($_SESSION['token']); ?>">MENU</a>
+        </div>
     </div>
-</a>
-<a href="sudahapprove.php?username=<?php echo $_GET['username']; ?>&bagian=<?php echo $_GET['bagian']; ?>&token=<?php echo htmlspecialchars($_SESSION['token']); ?>" class="link-dark link-underline link-underline-opacity-0">
-    <div class="box">
-    <svg xmlns="http://www.w3.org/2000/svg" width="50%" height="50%" fill="rgb(61, 60, 60)" class="bi bi-check-square" viewBox="0 0 16 16">
-      <path d="M14 1a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1zM2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2z"/>
-      <path d="M10.97 4.97a.75.75 0 0 1 1.071 1.05l-3.992 4.99a.75.75 0 0 1-1.08.02L4.324 8.384a.75.75 0 1 1 1.06-1.06l2.094 2.093 3.473-4.425z"/>
-    </svg>
-        <div class="name">SUDAH APPROVE</div>
+        <div class="page">
+        <a class="link-dark link-offset-2 link-underline-opacity-0" href="foreman.php?username=<?php echo $_GET['username']; ?>&bagian=<?php echo $_GET['bagian']; ?>&token=<?php echo htmlspecialchars($_SESSION['token']); ?>">
+            <div class="box">
+                <svg xmlns="http://www.w3.org/2000/svg" width="50%" height="50%" fill="rgb(61, 60, 60)" class="bi bi-rulers" viewBox="0 0 16 16">
+                    <path d="M1 0a1 1 0 0 0-1 1v14a1 1 0 0 0 1 1h5v-1H2v-1h4v-1H4v-1h2v-1H2v-1h4V9H4V8h2V7H2V6h4V2h1v4h1V4h1v2h1V2h1v4h1V4h1v2h1V2h1v4h1V1a1 1 0 0 0-1-1z"/>
+                  </svg>
+                <div class="name">KALIBRASI</div>
+            </div>
+        </a>
+        <a class="link-dark link-offset-2 link-underline-opacity-0" href="../src/pages/maintenance.php?token=<?php echo htmlspecialchars($_SESSION['token']); ?>">
+            <div class="box">
+                <svg xmlns="http://www.w3.org/2000/svg" width="50%" height="50%" fill="rgb(61, 60, 60)" class="bi bi-tools" viewBox="0 0 16 16">
+                    <path d="M1 0 0 1l2.2 3.081a1 1 0 0 0 .815.419h.07a1 1 0 0 1 .708.293l2.675 2.675-2.617 2.654A3.003 3.003 0 0 0 0 13a3 3 0 1 0 5.878-.851l2.654-2.617.968.968-.305.914a1 1 0 0 0 .242 1.023l3.27 3.27a.997.997 0 0 0 1.414 0l1.586-1.586a.997.997 0 0 0 0-1.414l-3.27-3.27a1 1 0 0 0-1.023-.242L10.5 9.5l-.96-.96 2.68-2.643A3.005 3.005 0 0 0 16 3q0-.405-.102-.777l-2.14 2.141L12 4l-.364-1.757L13.777.102a3 3 0 0 0-3.675 3.68L7.462 6.46 4.793 3.793a1 1 0 0 1-.293-.707v-.071a1 1 0 0 0-.419-.814zm9.646 10.646a.5.5 0 0 1 .708 0l2.914 2.915a.5.5 0 0 1-.707.707l-2.915-2.914a.5.5 0 0 1 0-.708M3 11l.471.242.529.026.287.445.445.287.026.529L5 13l-.242.471-.026.529-.445.287-.287.445-.529.026L3 15l-.471-.242L2 14.732l-.287-.445L1.268 14l-.026-.529L1 13l.242-.471.026-.529.445-.287.287-.445.529-.026z"/>
+                  </svg>
+                <div class="name">MAINTENACE</div>
+            </div>
+        </a>
+        <a class="link-dark link-offset-2 link-underline-opacity-0" href="part/operational/index.html">
+            <div class="box">
+                <svg xmlns="http://www.w3.org/2000/svg" width="50%" height="50%" fill="rgb(61, 60, 60)" class="bi bi-graph-up-arrow" viewBox="0 0 16 16">
+                    <path fill-rule="evenodd" d="M0 0h1v15h15v1H0zm10 3.5a.5.5 0 0 1 .5-.5h4a.5.5 0 0 1 .5.5v4a.5.5 0 0 1-1 0V4.9l-3.613 4.417a.5.5 0 0 1-.74.037L7.06 6.767l-3.656 5.027a.5.5 0 0 1-.808-.588l4-5.5a.5.5 0 0 1 .758-.06l2.609 2.61L13.445 4H10.5a.5.5 0 0 1-.5-.5"/>
+                  </svg>
+                <div class="name">OPERATIONAL</div>
+            </div>
+        </a>
+        <a class="link-dark link-offset-2 link-underline-opacity-0" href="part/drawing/index.html">
+            <div class="box">
+                <svg xmlns="http://www.w3.org/2000/svg" width="50%" height="50%" fill="rgb(61, 60, 60)" class="bi bi-easel" viewBox="0 0 16 16">
+                    <path d="M8 0a.5.5 0 0 1 .473.337L9.046 2H14a1 1 0 0 1 1 1v7a1 1 0 0 1-1 1h-1.85l1.323 3.837a.5.5 0 1 1-.946.326L11.092 11H8.5v3a.5.5 0 0 1-1 0v-3H4.908l-1.435 4.163a.5.5 0 1 1-.946-.326L3.85 11H2a1 1 0 0 1-1-1V3a1 1 0 0 1 1-1h4.954L7.527.337A.5.5 0 0 1 8 0M2 3v7h12V3z"/>
+                </svg>
+                <div class="name">DRAWING</div>
+            </div>
+        </a>
     </div>
-</a>
-</div>
 </div>
 
 <!-- js -->
-<script src="script.js"></script>
 <script src="../../../src/components/bootstrap/js/bootstrap.min.js"></script>
 <script src="../../../src/components/bootstrap/js/bootstrap.bundle.js"></script>
 </body>

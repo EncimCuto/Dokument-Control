@@ -13,42 +13,13 @@ $username = $_SESSION['username'];
 $bagian = $_SESSION['bagian'];
 ?>
 
-<?php
-require_once '../../../config/config2.php';
-
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    // Get the IDs from the POST request
-    $ids = isset($_POST['ids']) ? json_decode($_POST['ids'], true) : [];
-
-    if (!empty($ids)) {
-        $conn = new mysqli('localhost', 'username', 'password', 'database');
-
-        if ($conn->connect_error) {
-            die('Connection failed: ' . $conn->connect_error);
-        }
-
-        // Create a prepared statement to prevent SQL injection
-        $stmt = $conn->prepare('DELETE FROM your_table WHERE id = ?');
-
-        foreach ($ids as $id) {
-            $stmt->bind_param('i', $id);
-            $stmt->execute();
-        }
-
-        $stmt->close();
-        $conn->close();
-    }
-}
-?>
-
-
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>schedule-pressure</title>
+    <title>pdf pump</title>
 
     <!-- css -->
     <link rel="stylesheet" href="../../../styles/schedule.css">
@@ -94,14 +65,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                             <div class="accordion-item">
                                 <h2 class="accordion-header">
                                     <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-                                        Kode Alat
+                                        Nama File
                                     </button>
                                 </h2>
                                 <div id="collapseOne" class="accordion-collapse collapse show" data-bs-parent="#accordionExample">
                                     <div class="accordion-body">
 
-                                        <form style="display: flex; justify-content:right;" action="handover.php" method="GET">
-                                            <input class="form-control" id="kode_alat" name="kode_alat" placeholder="Kode_Alat" type="text">
+                                        <form style="display: flex; justify-content:right;" action="list_pdf.php" method="GET">
+                                            <input class="form-control" id="nama_file" name="nama_file" placeholder="Nama File" type="text">
                                             <input class="btn btn-primary" type="submit" value="Search">
                                         </form>
 
@@ -117,8 +88,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                                 <div id="collapseTwo" class="accordion-collapse collapse" data-bs-parent="#accordionExample">
                                     <div class="accordion-body">
 
-                                        <form style="display: flex; justify-content:right;" action="handover.php" method="GET">
-                                            <input class="form-control" id="tanggal_dibuat" name="tanggal_dibuat" placeholder="Tanggal" type="text">
+                                        <form style="display: flex; justify-content:right;" action="list_pdf.php" method="GET">
+                                            <input class="form-control" id="created_at" name="created_at" placeholder="Tanggal" type="text">
                                             <input class="btn btn-primary" type="submit" value="Search">
                                         </form>
 
@@ -196,10 +167,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             <div class="dread">
                 <div class="crumb">
                     <div class="rumb">
-                        <a class="link-dark link-offset-2 link-underline-opacity-0 link-underline-opacity-100-hover" href="../../../../public/indeks.php?token=<?php echo htmlspecialchars($_SESSION['token']); ?>">MENU</a>
-                        <a class="link-dark link-offset-2 link-underline-opacity-0 link-underline-opacity-100-hover" href="../../kalibrasi.php?token=<?php echo htmlspecialchars($_SESSION['token']); ?>">> KALIBRASI</a>
-                        <a class="link-dark link-offset-2 link-underline-opacity-0 link-underline-opacity-100-hover" href="pressure.php">> PRESSURE</a>
-                        <a class="link-dark link-offset-2 link-underline-opacity-0 link-underline-opacity-100-hover" href="handover.php">> FORM PDF</a>
+                        <a class="link-dark link-offset-2 link-underline-opacity-0 link-underline-opacity-100-hover" href="../../../../public/indeks.php?token=<?php echo htmlspecialchars($_SESSION['token']); ?>">
+                            MENU</a>
+                        <a class="link-dark link-offset-2 link-underline-opacity-0 link-underline-opacity-100-hover" href="../../maintenance.php?token=<?php echo htmlspecialchars($_SESSION['token']); ?>">
+                            >MAINTENANCE</a>
+                        <a class="link-dark link-offset-2 link-underline-opacity-0 link-underline-opacity-100-hover" href="dashboard.php?token=<?php echo htmlspecialchars($_SESSION['token']); ?>">
+                            > MOTOR PUMP</a>
+                        <a class="link-dark link-offset-2 link-underline-opacity-0 link-underline-opacity-100-hover" href="list_pdf.php?token=<?php echo htmlspecialchars($_SESSION['token']); ?>">> FORM PDF</a>
                     </div>
                 </div>
             </div>
@@ -208,54 +182,54 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
                     <!-- TABLE -->
                     <?php
-                    require_once '../../../config/config2.php';
+                    require_once '../../../config/config5.php';
 
                     // departemen pemilik
-                    if (isset($_GET['tanggal_dibuat'])) {
-                        $tanggal_dibuat = $_GET['tanggal_dibuat'];
+                    if (isset($_GET['created_at'])) {
+                        $created_at = $_GET['created_at'];
                     } else {
-                        $tanggal_dibuat = '';
+                        $created_at = '';
                     }
 
                     // nama alat
-                    if (isset($_GET['kode_alat'])) {
-                        $kode_alat = $_GET['kode_alat'];
+                    if (isset($_GET['nama_file'])) {
+                        $nama_file = $_GET['nama_file'];
                     } else {
-                        $kode_alat = '';
+                        $nama_file = '';
                     }
 
-                    $sql = "SELECT * FROM pressure_handover WHERE 1";
+                    $sql = "SELECT * FROM pump_pdf WHERE 1";
 
-                    // departemen pemilik
-                    if (!empty($tanggal_dibuat)) {
-                        $sql .= " AND tanggal_dibuat LIKE '%$tanggal_dibuat%'";
+                    // nama alat
+                    if (!empty($nama_file)) {
+                        $sql .= " AND nama_file LIKE '%$nama_file%'";
                     }
 
                     // nama alat
-                    if (!empty($kode_alat)) {
-                        $sql .= " AND kode_alat LIKE '%$kode_alat%'";
+                    if (!empty($created_at)) {
+                        $sql .= " AND $created_at LIKE '%$created_at%'";
                     }
 
                     $result = $conn->query($sql);
                     echo "<table class='table table-hover'>";
                     echo "<tr class='table-dark table-sm'>";
-                    echo "<th>#</th>";
-                    echo "<th>TANGGAL</th>";
-                    echo "<th>KODE ALAT</th>";
+                    echo "<th>No.</th>";
+                    echo "<th>Nama File</th>";
+                    echo "<th>Created At</th>";
                     echo "<th colspan='2'>OPSI</th>";
                     echo "</tr>";
                     if ($result && $result->num_rows > 0) {
-                        $counter = 1;
+                        $no = 1;
                         while ($row = $result->fetch_assoc()) {
                             echo "<tr>";
                             echo '<td class="table-check"><input type="checkbox" name="ids[]" class="form-check-input" value="' . htmlspecialchars($row['id']) . '"></td>';
-                            echo '<td>' . $counter . '</td>';
-                            echo "<td>" . htmlspecialchars($row['tanggal_dibuat']) . "</td>";
-                            echo "<td>" . htmlspecialchars($row['kode_alat']) . "</td>";
-                            echo '<td><a href="page-system/view-handover.php?id=' . htmlspecialchars($row['id']) . '"><i class="bi bi-eye-fill"></i></a></td>';
-                            echo '<td><a class="link-danger link-offset-2 link-underline-opacity-25 link-underline-opacity-100-hover" href="../../../system/pressure/delete-data-handover.php?id=' . htmlspecialchars($row['id']) . '"><i class="bi bi-trash-fill"></i></a></td>';
+                            echo '<td>' . $no . '</td>';
+                            echo "<td>" . htmlspecialchars($row['nama_file']) . "</td>";
+                            echo "<td>" . htmlspecialchars($row['created_at']) . "</td>";
+                            echo '<td><a href="lihat_pdf.php?id=' . $row['id'] . '" target="_blank"><i class="bi bi-eye-fill"></i></a></td>';
+                            echo '<td><a class="link-danger link-offset-2 link-underline-opacity-25 link-underline-opacity-100-hover" href="../../../system/pressure/delete-data-list_pdf.php?id=' . htmlspecialchars($row['id']) . '"><i class="bi bi-trash-fill"></i></a></td>';
                             echo "</tr>";
-                            $counter++;
+                            $no++;
                         }
                         echo "</table>";
                     }

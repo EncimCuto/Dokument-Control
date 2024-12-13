@@ -133,7 +133,7 @@ $bagian = $_SESSION['bagian'];
                         <div class="name">INPUT FORM</div>
                     </div>
                 </a>
-                <a href="pdf.php?token=<?php echo htmlspecialchars($_SESSION['token']); ?>" class="link-dark link-underline link-underline-opacity-0">
+                <a href="list_pdf.php?token=<?php echo htmlspecialchars($_SESSION['token']); ?>" class="link-dark link-underline link-underline-opacity-0">
                     <div class="box">
                         <i class="bi bi-file-earmark-pdf-fill" style="font-size: 70px;"></i>
                         <div class="name">FORM PDF</div>

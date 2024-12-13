@@ -686,13 +686,13 @@ if (isset($_GET['alert'])) {
                             <table>
                                 <tr>
                                     <td>Layak</td>
-                                    <td><input type="radio" name="layak" id="layak"></td>
+                                    <td><input type="checkbox" name="layak" id="layak"></td>
                                     <td>Tidak Layak</td>
-                                    <td><input type="radio" name="tidakLayak" id="tidakLayak"></td>
+                                    <td><input type="checkbox" name="tidakLayak" id="tidakLayak"></td>
                                 </tr>
                             </table>
+                            <input type="hidden" name="comnt1" id="comnt1">
                         </div>
-                        <input type="hidden" name="catatan" id="catatan">
                     </div>
 
                     <br>
@@ -825,13 +825,22 @@ if (isset($_GET['alert'])) {
             </script>
 
             <script>
-                layak = document.getElementById('layak');
-                tlayak = document.getElementById('tidakLayak');
-                komentar = document.getElementById('komentar');
-                
-                function koment() {
+            let pilihan1 = document.getElementById('layak');
+            let pilihan2 = document.getElementById('tidakLayak');
+            let catatan = document.getElementById('comnt1');
 
+            function komentarCatatan() {
+                if (pilihan1.checked) {
+                catatan.value = 'Layak';
+                } else if (pilihan2.checked) {
+                catatan.value = 'Tidak Layak';
+                } else {
+                catatan.value = '';
                 }
+            }
+
+            pilihan1.addEventListener("change", komentarCatatan);
+            pilihan2.addEventListener("change", komentarCatatan);
             </script>
 
             <script>

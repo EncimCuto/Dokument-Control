@@ -36,14 +36,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     continue;
                 }
         
-                $stmt_update = $conn->prepare("UPDATE pressure_handover SET app3 = ?, manager = ? WHERE id IN ($idsString)");
+                $stmt_update = $conn->prepare("UPDATE pressure_handover SET app1 = ?, foreman = ? WHERE id IN ($idsString)");
 
                 if ($stmt_update) {
                     $stmt_update->bind_param("ss", $img, $name);
 
                     if ($stmt_update->execute()) {
                     
-                        header("Location: http://10.11.11.199/dokument-control/approvement/pressure/manager/belumapprove.php?username=" . urlencode($username) . "&bagian=" . urlencode($bagian));
+                        header("Location: http://10.11.11.199/dokument-control/approvement/pressure/foreman/belumapprove.php?username=" . urlencode($username) . "&bagian=" . urlencode($bagian));
                         exit();
                     }
                      else {
@@ -51,7 +51,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     }
                     $stmt_update->close();
                 } else {
-                    echo "Gagal menyiapkan statement update: " . $conn->error . "<br>";
+                    echo "Gagal menyiapkan statement update: " . $conn->$error . "<br>";
                 }
             }
         } else {
@@ -59,7 +59,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         }
         $stmt_select->close();
     } else {
-        echo "Gagal menyiapkan statement select: " . $conn->error;
+        echo "Gagal menyiapkan statement select: " . $conn->$error;
     }
     $conn->close();
 }

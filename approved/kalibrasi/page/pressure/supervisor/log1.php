@@ -1,6 +1,5 @@
 <?php
 session_start();
-
 require_once '../../../src/config/config4.php';
 
 $id = $_GET['id'];
@@ -16,18 +15,16 @@ $user = $stmt->fetch(PDO::FETCH_ASSOC);
 
 if ($user) {
     $token = md5(uniqid());
-
     $_SESSION['token'] = $token;
     $_SESSION['id'] = $user['id'];
     $_SESSION['username'] = $user['username'];
     $_SESSION['bagian'] = $user['bagian'];
 
     setcookie('token', $token, time() + 86400, "/");
-
-    header("Location: http://10.11.11.199/dokument-control/approvement/pressure/foreman/foreman.php?id=$id&username=$username&bagian=$bagian&$token");
+    header("Location: http://10.11.11.199/dokument-control/approvement/pressure/supervisor/indeks.php?id=$id&username=$username&bagian=$bagian&$token");
     exit;
 } else {
-    header('Location: ../log-in-app1.php?error=login_failed');
+    header('Location: ../log-in-app2.php?error=login_failed');
     exit;
 }
 ?>

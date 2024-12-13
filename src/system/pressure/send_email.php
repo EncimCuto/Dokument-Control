@@ -269,6 +269,8 @@ $tidakpasti15 = number_format($uhasil15, 2, '.', '');
 
 $tanggal_dibuat = date('m/d/Y');
 
+$comnt1 = isset($_POST['comnt1']) ? $_POST['comnt1'] : 'Tidak tersedia';
+
 // email
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $name = "PT.BUMI ALAM SEGAR";
@@ -287,10 +289,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     alat_turun1, alat_turun2, alat_turun3, alat_turun4, alat_turun5, alat_turun6, alat_turun7, alat_turun8, alat_turun9, alat_turun10, alat_turun11, alat_turun12, alat_turun13, alat_turun14, alat_turun15, 
     standar_turun1, standar_turun2, standar_turun3, standar_turun4, standar_turun5, standar_turun6, standar_turun7, standar_turun8, standar_turun9, standar_turun10, standar_turun11, standar_turun12, standar_turun13, standar_turun14, standar_turun15, 
     koreksi_turun1, koreksi_turun2, koreksi_turun3, koreksi_turun4, koreksi_turun5, koreksi_turun6, koreksi_turun7, koreksi_turun8, koreksi_turun9, koreksi_turun10, koreksi_turun11, koreksi_turun12, koreksi_turun13, koreksi_turun14, koreksi_turun15, 
-    ketidakpastian1, ketidakpastian2, ketidakpastian3, ketidakpastian4, ketidakpastian5, ketidakpastian6, ketidakpastian7, ketidakpastian8, ketidakpastian9, ketidakpastian10, ketidakpastian11, ketidakpastian12, ketidakpastian13, ketidakpastian14, ketidakpastian15, tanggal_dibuat) 
+    ketidakpastian1, ketidakpastian2, ketidakpastian3, ketidakpastian4, ketidakpastian5, ketidakpastian6, ketidakpastian7, ketidakpastian8, ketidakpastian9, ketidakpastian10, ketidakpastian11, ketidakpastian12, ketidakpastian13, ketidakpastian14, ketidakpastian15, tanggal_dibuat, catatan) 
    
-    VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)");
-    $stmt->bind_param("ssssssssssssssssdddddddddddddddsssssssssssssssddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddds",
+    VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)");
+    $stmt->bind_param("ssssssssssssssssdddddddddddddddsssssssssssssssdddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddss",
     $dept2, $lok2, $kal2, $nam2, $mer2, $tip2, $kap2, $res2, $lok_kal2, $suh2, $kel2, $rang2, $lim2, $kode, $tanggal_kalibrasi2, $tanggal_kalibrasi_ulang2,
      $persen0, $titikpersen1, $titikpersen2, $titikpersen3, $titikpersen4, $titikpersen5, $titikpersen6, $titikpersen7, $titikpersen8, $titikpersen9, $titikpersen10, $titikpersen11, $titikpersen12, $titikpersen13, $titikpersen14, 
      $nan1, $nan21, $nan41, $nan61, $nan81, $nan101, $nan121, $nan141, $nan161, $nan181, $nan201, $nan221, $nan241, $nan261, $nan281, 
@@ -300,7 +302,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
      $bac17, $bac37, $bac57, $bac77, $bac97, $bac117, $bac137, $bac157, $bac177, $bac197, $bac217, $bac237, $bac257, $bac277, $bac297, 
      $standart1, $standart2, $standart3, $standart4, $standart5, $standart6, $standart7, $standart8, $standart9, $standart10, $standart11, $standart12, $standart13, $standart14, $standart15,
      $koreksit1, $koreksit2, $koreksit3, $koreksit4, $koreksit5, $koreksit6, $koreksit7, $koreksit8, $koreksit9, $koreksit10, $koreksit11, $koreksit12, $koreksit13, $koreksit14, $koreksit15,
-     $tidakpasti1, $tidakpasti2, $tidakpasti3, $tidakpasti4, $tidakpasti5, $tidakpasti6, $tidakpasti7, $tidakpasti8, $tidakpasti9, $tidakpasti10, $tidakpasti11, $tidakpasti12, $tidakpasti13, $tidakpasti14, $tidakpasti15, $tanggal_dibuat);
+     $tidakpasti1, $tidakpasti2, $tidakpasti3, $tidakpasti4, $tidakpasti5, $tidakpasti6, $tidakpasti7, $tidakpasti8, $tidakpasti9, $tidakpasti10, $tidakpasti11, $tidakpasti12, $tidakpasti13, $tidakpasti14, $tidakpasti15, $tanggal_dibuat, $comnt1);
 
     if ($stmt->execute()) {
         $last_id = mysqli_insert_id($conn);
@@ -552,9 +554,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $mail->Body    = $content4;
             $mail->send();
 
-            header('Location:../../pages/kalibrasi/6-pressure/form.php?alert=Berhasil');
+            header('Location:../../pages/kalibrasi/6-pressure/handover.php?alert=Berhasil');
         } catch (Exception $e) {
-            header('Location:../../pages/kalibrasi/6-pressure/form.php?alert=Beberapa');
+            header('Location:../../pages/kalibrasi/6-pressure/handover.php?alert=Beberapa');
         }
     } else {
             header('Location:../../pages/kalibrasi/6-pressure/form.php?alert=gagal');

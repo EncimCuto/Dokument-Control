@@ -21,10 +21,10 @@ if ($user) {
     $_SESSION['bagian'] = $user['bagian'];
 
     setcookie('token', $token, time() + 86400, "/");
-    header("Location: http://10.11.11.199/dokument-control/approvement/pressure/supervisor/supervisor.php?id=$id&username=$username&bagian=$bagian&$token");
+    header("Location: http://10.11.11.199/dokument-control/approvement/pressure/user/indeks.php?id=$id&username=$username&bagian=$bagian&$token");
     exit;
 } else {
-    header('Location: ../log-in-app2.php?error=login_failed');
+    header('Location: ../log-in-app4.php?error=login_failed');
     exit;
 }
 ?>

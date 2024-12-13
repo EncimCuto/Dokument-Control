@@ -21,7 +21,7 @@ if ($user) {
     $_SESSION['bagian'] = $user['bagian'];
 
     setcookie('token', $token, time() + 86400, "/");
-    header("Location: http://10.11.11.199/dokument-control/approvement/pressure/manager/manager.php?id=$id&username=$username&bagian=$bagian&$token");
+    header("Location: http://10.11.11.199/dokument-control/approvement/pressure/manager/indeks.php?id=$id&username=$username&bagian=$bagian&$token");
     exit;
 } else {
     header('Location: ../log-in-app3.php?error=login_failed');

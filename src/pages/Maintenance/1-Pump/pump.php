@@ -154,6 +154,8 @@ $bagian = $_SESSION['bagian'];
             <a href="../../maintenance.php?token=<?php echo htmlspecialchars($_SESSION['token']); ?>">MAINTENANCE</a>
             <b>></b>
             <a href="./dashboard.php?token=<?php echo htmlspecialchars($_SESSION['token']); ?>">MOTOR PUMP</a>
+            <b>></b>
+            <a href="pump.php?token=<?php echo htmlspecialchars($_SESSION['token']); ?>">INPUT FORM</a>
         </div>
 
         <form action="simpan_data.php" method="post">
